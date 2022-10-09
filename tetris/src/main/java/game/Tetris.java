@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import game.dirEnum.Direction;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -29,6 +31,9 @@ public class Tetris extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        //Adding a keyListener
+        addKeyListener(new MyKeyAdapter());
+
         setVisible(true);
     }
 
@@ -45,20 +50,6 @@ public class Tetris extends JFrame
         for(JLabel a : matrix.getCells())
             panel.add(a);
 
-        //TODO: Fix and implement piece movement 
-        //Adding a keyListener
-        panel.addKeyListener(new KeyAdapter()
-            {
-                public void keyPressed(KeyEvent event) 
-                {
-                    if (event.getKeyChar() == 'd' || event.getKeyChar() == 'D')
-                        matrix.moveRight();
-                    
-                }
-
-            }
-        );
-
         add(panel);
     }
 
@@ -66,5 +57,19 @@ public class Tetris extends JFrame
     {
         super.paint(g);
         matrix.sinkPiece();
+    }
+
+    private class MyKeyAdapter extends KeyAdapter
+    {
+        @Override public void keyPressed(KeyEvent event) 
+        {
+            if(event.getKeyCode() == KeyEvent.VK_D)
+                matrix.move(Direction.RIGHT);
+            
+            else if(event.getKeyCode() == KeyEvent.VK_A)
+                matrix.move(Direction.LEFT);
+
+            repaint();
+        }
     }
 }

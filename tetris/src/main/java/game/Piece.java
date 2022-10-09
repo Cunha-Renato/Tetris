@@ -13,13 +13,32 @@ public abstract class Piece
     public int color=new Random().nextInt(2);
     public List<Point> cells = new ArrayList<Point>();
     public List<Point> occupied;
+    public int y=0;
+    public int x=gridX/2;
 
     //Auxiliar class (only one function)
     public Auxiliar aux;
 
-    public abstract boolean sink();
-    public abstract void moveRight();
-    
+    protected abstract void calc();
+    protected abstract void reCalc();
+
+    public void sink()
+    {
+        y++;
+        reCalc();
+    };
+    public void moveRight()
+    {
+        x++;
+        reCalc();
+    }
+    public void moveLeft()
+    {
+        x--;
+        reCalc();
+    }
+
+
     public boolean isValid(List<Point> thisPiece, Direction dir)
     {
         int auxX=0;
@@ -52,7 +71,13 @@ public abstract class Piece
                     return false;
             }
 
-            if((cell.getX()>gridX-2) || (cell.getX()<1) || (cell.getY()>gridY-2))
+            if(cell.getY()>gridY-2)
+                return false;
+            
+            else if((dir==Direction.RIGHT) && (cell.getX()>gridX-2))
+                return false;
+
+            else if((dir==Direction.LEFT) && (cell.getX()<1))
                 return false;
         }
             

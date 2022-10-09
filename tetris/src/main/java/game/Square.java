@@ -2,64 +2,40 @@ package game;
 
 import java.util.List;
 
-import game.dirEnum.Direction;
-
 public class Square extends Piece
 {
-    private int squareY=0;
-    private int squareX=gridX/2;
-
     Square(int x, int y, List<Point> occupied)
     {
         gridX=x;
         gridY=y;
-        squareY=0;
-        squareX=x/2;
+
+        this.y=0;
+        this.x=x/2;
+        
         this.occupied=occupied;
         aux=new Auxiliar();
 
         calc();
     }
     
-    private void calc()
+    @Override
+    protected void calc()
     {
-        cells.add(new Point(squareX, squareY+1));
-        cells.add(new Point(squareX-1, squareY+1));
-        cells.add(new Point(squareX-1, squareY));
-        cells.add(new Point(squareX, squareY));
+        cells.add(new Point(x, y+1));
+        cells.add(new Point(x-1, y+1));
+        cells.add(new Point(x-1, y));
+        cells.add(new Point(x, y));
 
         for(Point cell : cells)
             cell.setArrPos(gridX);
     }
 
-    private void reCalc()
-    {
-        cells.get(3).setPoint(squareX, squareY);
-        cells.get(2).setPoint(squareX-1, squareY);
-        cells.get(1).setPoint(squareX-1, squareY+1);
-        cells.get(0).setPoint(squareX, squareY+1);
-    }
-
     @Override
-    public boolean sink() 
+    protected void reCalc()
     {
-        if(isValid(cells, Direction.DOWN))
-        {
-            squareY++;
-            reCalc();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public void moveRight()
-    {
-        if(isValid(cells, Direction.DOWN))
-        {
-            squareY++;
-            reCalc();
-        }
+        cells.get(3).setPoint(x, y);
+        cells.get(2).setPoint(x-1, y);
+        cells.get(1).setPoint(x-1, y+1);
+        cells.get(0).setPoint(x, y+1);
     }
 }

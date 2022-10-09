@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
+
+import game.dirEnum.Direction;
+
 import java.awt.Dimension;
 import java.awt.Image;
 
@@ -12,7 +15,6 @@ public class Matrix
     private final int x = 10;
     private final int y = 20;
     private final int cellSize = 20;
-    private boolean isOk=true;
 
     private List<ImageIcon> color = new ArrayList<ImageIcon>();
     private List<JLabel> cells = new ArrayList<JLabel>();
@@ -79,32 +81,47 @@ public class Matrix
 
     public void sinkPiece()
     {
-        List<Point> auxList = piece.cells;
-
-        if(isOk)
+        if(piece.isValid(piece.cells, Direction.DOWN))
         {
-            eraseGhost(auxList);
-
-            if(!piece.sink())
-            {
-                for(Point cell : piece.cells)
-                    occupied.add(cell);
-
-                isOk=false;
-            }
-
-            update(); 
+            eraseGhost(piece.cells);
+            piece.sink();
         }
         else
         {
+            for(Point cell : piece.cells)
+                occupied.add(cell);
+
             newPiece();
-            isOk=true;
         }
 
+        update();
     }
-    public void moveRight()
+    public void move(Direction dir)
     {
-        piece.moveRight();
+        eraseGhost(piece.cells);
+
+        switch(dir)
+        {
+            case RIGHT:
+                if(piece.isValid(piece.cells, Direction.RIGHT))
+                    piece.moveRight();
+            break;
+
+            case LEFT:
+                if(piece.isValid(piece.cells, Direction.LEFT))
+                    piece.moveLeft();
+            break;
+
+            case DOWN:
+                if(piece.isValid(piece.cells, Direction.DOWN))
+                    sinkPiece();
+            break;
+
+            default:
+            break;
+        }
+        
+        update();
     }
 
     //Getters
