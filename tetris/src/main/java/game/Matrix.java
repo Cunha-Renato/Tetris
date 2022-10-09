@@ -102,6 +102,10 @@ public class Matrix
         }
 
     }
+    public void moveRight()
+    {
+        piece.moveRight();
+    }
 
     //Getters
     public int getX() {return x;}

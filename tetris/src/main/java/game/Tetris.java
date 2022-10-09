@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Tetris extends JFrame
 {
@@ -42,6 +44,20 @@ public class Tetris extends JFrame
         matrix.setCellsPosition(getWidth(), getHeight());
         for(JLabel a : matrix.getCells())
             panel.add(a);
+
+        //TODO: Fix and implement piece movement 
+        //Adding a keyListener
+        panel.addKeyListener(new KeyAdapter()
+            {
+                public void keyPressed(KeyEvent event) 
+                {
+                    if (event.getKeyChar() == 'd' || event.getKeyChar() == 'D')
+                        matrix.moveRight();
+                    
+                }
+
+            }
+        );
 
         add(panel);
     }

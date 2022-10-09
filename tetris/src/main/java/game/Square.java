@@ -11,8 +11,8 @@ public class Square extends Piece
 
     Square(int x, int y, List<Point> occupied)
     {
-        this.gridX=x;
-        this.gridY=y;
+        gridX=x;
+        gridY=y;
         squareY=0;
         squareX=x/2;
         this.occupied=occupied;
@@ -43,7 +43,7 @@ public class Square extends Piece
     @Override
     public boolean sink() 
     {
-        if((squareY+1 < this.gridY-1) && isValid(cells, Direction.DOWN))
+        if(isValid(cells, Direction.DOWN))
         {
             squareY++;
             reCalc();
@@ -56,6 +56,10 @@ public class Square extends Piece
 
     public void moveRight()
     {
-        
+        if(isValid(cells, Direction.DOWN))
+        {
+            squareY++;
+            reCalc();
+        }
     }
 }

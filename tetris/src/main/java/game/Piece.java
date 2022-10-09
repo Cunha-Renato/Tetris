@@ -45,9 +45,16 @@ public abstract class Piece
         }
 
         for(Point cell : thisPiece)
+        {
             for(Point blocked : occupied)
+            {
                 if((cell.getX()+auxX == blocked.getX()) && (cell.getY()+auxY == blocked.getY()))
                     return false;
+            }
+
+            if((cell.getX()>gridX-2) || (cell.getX()<1) || (cell.getY()>gridY-2))
+                return false;
+        }
             
         return true;
     }
