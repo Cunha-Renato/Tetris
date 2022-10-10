@@ -3,16 +3,16 @@ package game;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import game.dirEnum.Direction;
-
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import game.dirEnum.Direction;
+
 public class Tetris extends JFrame
 {
-    Matrix matrix = new Matrix();
+    private Matrix matrix = new Matrix();
+    private MyTimer timer = new MyTimer();
 
     public Tetris()
     {
@@ -53,12 +53,20 @@ public class Tetris extends JFrame
         add(panel);
     }
 
+    private void timedSink()
+    {
+        if(timer.checkTime(500))
+            matrix.sinkPiece();
+    }
+
     public void paint(Graphics g)
     {
         super.paint(g);
-        matrix.sinkPiece();
+        timedSink();
+        repaint();
     }
 
+    //A "custom" KeyAdapter to control the movement
     private class MyKeyAdapter extends KeyAdapter
     {
         @Override public void keyPressed(KeyEvent event) 
@@ -68,6 +76,9 @@ public class Tetris extends JFrame
             
             else if(event.getKeyCode() == KeyEvent.VK_A)
                 matrix.move(Direction.LEFT);
+
+            else if(event.getKeyCode() == KeyEvent.VK_S)
+                matrix.sinkPiece();
 
             repaint();
         }

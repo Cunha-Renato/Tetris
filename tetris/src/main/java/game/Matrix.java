@@ -30,6 +30,7 @@ public class Matrix
         setColors();
         setCells();
         newPiece();
+        update(1);
     }
 
     private void setCells()
@@ -66,10 +67,29 @@ public class Matrix
 
     }
 
-    public void update()
+    public void update(int op)
     {
-        for(Point a : this.piece.cells)
-            cells.get(a.getArrPos()).setIcon(color.get(this.piece.color));
+        if(op!=0)
+            for(Point a : this.piece.cells)
+                cells.get(a.getArrPos()).setIcon(color.get(this.piece.color));
+        else
+        {
+            int count=0;
+
+            for(JLabel cell : cells)
+            {
+                for(Point blocked : occupied)
+                    if(blocked.getArrPos()!=cells.indexOf(cell))
+                        count++;
+            
+                if(count==occupied.size())
+                    cell.setIcon(background);
+                
+                count=0;
+            }
+
+        } 
+
     }
 
     private void eraseGhost(List<Point> list)
@@ -77,6 +97,41 @@ public class Matrix
         
         for(Point a : list)
             cells.get(a.getArrPos()).setIcon(background);
+    }
+
+    private void clearLines()
+    {
+        if(occupied!=null)
+        {
+            int check=0;  
+            int minY=occupied.get(0).getY();  
+
+            aux.shellSortPointY(occupied);
+            
+            for(int i=y-1; i>=minY; i--)
+            {
+                if((aux.countInstanceOfY(i, occupied)==x) && i!=check)
+                {
+                    check=i;
+                    clearY(check);
+                }
+            }
+        }
+    }
+
+    private void clearY(int yVal)
+    {
+        int size=occupied.size();
+        
+        for(int j=0; j<size; j++)
+        {
+            if(occupied.get(j).getY()==yVal)
+            {
+                occupied.remove(j);
+                size--;
+                j--;
+            }
+        }
     }
 
     public void sinkPiece()
@@ -91,10 +146,12 @@ public class Matrix
             for(Point cell : piece.cells)
                 occupied.add(cell);
 
+            clearLines();
+            update(0);
             newPiece();
         }
 
-        update();
+        update(1);
     }
     public void move(Direction dir)
     {
@@ -121,7 +178,7 @@ public class Matrix
             break;
         }
         
-        update();
+        update(1);
     }
 
     //Getters
