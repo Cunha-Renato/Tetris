@@ -81,7 +81,7 @@ public class Matrix
 
     public void sinkPiece()
     {
-        if(piece.isValid(piece.cells, Direction.DOWN))
+        if(piece.isValid(Direction.DOWN))
         {
             eraseGhost(piece.cells);
             piece.sink();
@@ -103,17 +103,17 @@ public class Matrix
         switch(dir)
         {
             case RIGHT:
-                if(piece.isValid(piece.cells, Direction.RIGHT))
+                if(piece.isValid(Direction.RIGHT))
                     piece.moveRight();
             break;
 
             case LEFT:
-                if(piece.isValid(piece.cells, Direction.LEFT))
+                if(piece.isValid(Direction.LEFT))
                     piece.moveLeft();
             break;
 
             case DOWN:
-                if(piece.isValid(piece.cells, Direction.DOWN))
+                if(piece.isValid(Direction.DOWN))
                     sinkPiece();
             break;
 

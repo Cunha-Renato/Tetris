@@ -39,7 +39,7 @@ public abstract class Piece
     }
 
 
-    public boolean isValid(List<Point> thisPiece, Direction dir)
+    public boolean isValid(Direction dir)
     {
         int auxX=0;
         int auxY=0;
@@ -63,7 +63,7 @@ public abstract class Piece
             break;
         }
 
-        for(Point cell : thisPiece)
+        for(Point cell : cells)
         {
             for(Point blocked : occupied)
             {
