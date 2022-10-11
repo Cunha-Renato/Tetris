@@ -6,6 +6,7 @@ public class Point
     private int y;
     private int arrPos; //Represents the (x,y) position in an 2d array 
     private int gridX;
+    private int color;
 
     private Assistant aux = new Assistant();
     
@@ -45,8 +46,12 @@ public class Point
         arrPos=aux.arrPos(gridX, x, y);
     }
 
+    //Color seter
+    public void setColor(int color) {this.color=color;}
+
     //Getters
     public int getX() {return x;}
     public int getY() {return y;}
     public int getArrPos() {return arrPos;}
+    public int getColor() {return color;}
 }

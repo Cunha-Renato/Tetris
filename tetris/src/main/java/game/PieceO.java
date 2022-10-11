@@ -2,9 +2,9 @@ package game;
 
 import java.util.List;
 
-public class Square extends Piece
+public class PieceO extends Piece
 {
-    Square(int x, int y, List<Point> occupied)
+    PieceO(int x, int y, List<Point> occupied)
     {
         gridX=x;
         gridY=y;
