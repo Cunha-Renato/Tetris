@@ -4,8 +4,10 @@ import java.util.List;
 
 public class Auxiliar 
 {
+    //Calculates the position of an (x, y) in a 2d array
     public int arrPos(int x, int j, int i) {return j+(x*i);}
 
+    //Couter of a Y value in a list of Poits
     public int countInstanceOfY(int val, List<Point> list)
     {
         int count=0;
@@ -17,6 +19,7 @@ public class Auxiliar
         return count;
     }
 
+    //Sort a list o Points based on Y
     public void shellSortPointY(List<Point> list)
     {
         int j;
@@ -38,4 +41,5 @@ public class Auxiliar
             h/=2;
         }
     }
+
 }

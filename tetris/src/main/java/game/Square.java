@@ -19,7 +19,7 @@ public class Square extends Piece
     }
     
     @Override
-    protected void calc()
+    protected void calc() //Calculates/Sets the positions of cells forming an square
     {
         cells.add(new Point(x, y+1));
         cells.add(new Point(x-1, y+1));
@@ -31,7 +31,7 @@ public class Square extends Piece
     }
 
     @Override
-    protected void reCalc()
+    protected void reCalc() //Recalculates the positions
     {
         cells.get(3).setPoint(x, y);
         cells.get(2).setPoint(x-1, y);
