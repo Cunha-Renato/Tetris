@@ -13,7 +13,7 @@ public class Square extends Piece
         this.x=x/2;
         
         this.occupied=occupied;
-        aux=new Auxiliar();
+        aux=new Assistant();
 
         calc();
     }

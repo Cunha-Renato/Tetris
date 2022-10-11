@@ -20,7 +20,7 @@ public abstract class Piece
     public int y=0;
     public int x=gridX/2;
 
-    public Auxiliar aux; //Auxiliar class (only functions)
+    public Assistant aux; //Assistant class (only functions)
 
     //Will be diferent for each piece
     protected abstract void calc();
@@ -47,7 +47,7 @@ public abstract class Piece
     //Checs if the position of the piece is valid for a certain movement
     public boolean isValid(Direction dir)
     {
-        //Auxiliar variables
+        //Assistant variables
         int auxX=0;
         int auxY=0;
 

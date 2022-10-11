@@ -7,7 +7,7 @@ public class Point
     private int arrPos; //Represents the (x,y) position in an 2d array 
     private int gridX;
 
-    private Auxiliar aux = new Auxiliar();
+    private Assistant aux = new Assistant();
     
     public Point(int x, int y)
     {

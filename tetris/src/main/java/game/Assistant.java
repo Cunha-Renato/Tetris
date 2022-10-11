@@ -2,7 +2,7 @@ package game;
 
 import java.util.List;
 
-public class Auxiliar 
+public class Assistant 
 {
     //Calculates the position of an (x, y) in a 2d array
     public int arrPos(int x, int j, int i) {return j+(x*i);}
