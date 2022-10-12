@@ -3,7 +3,6 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import game.dirEnum.Direction;
 
 public abstract class Piece 
@@ -15,6 +14,7 @@ public abstract class Piece
     public int color=new Random().nextInt(2); //Color of the piece
     public List<Point> cells = new ArrayList<Point>(); //Cells that form the piece
     public List<Point> occupied; //A list representing occupied cells on the grid
+    private List<Point> possibles = new ArrayList<Point>();
 
     //Inicial position of the piece
     public int y=0;
@@ -27,21 +27,95 @@ public abstract class Piece
     protected abstract void reCalc();
 
     //Movements that every piece will have 
-    //TODO: Rotation 
-    public void sink()
+    public void move(Direction dir)
     {
-        y++;
-        reCalc();
-    };
-    public void moveRight()
-    {
-        x++;
-        reCalc();
+        int auxX=0;
+        int auxY=0;
+
+        switch(dir)
+        {
+            case DOWN:
+                auxY++;
+            break;
+
+            case RIGHT:
+                auxX++;
+            break;
+
+            case LEFT:
+                auxX--;
+            break;
+
+            default:
+            break;
+        }
+
+        for(Point cell : cells)
+            cell.setPoint(cell.getX()+auxX, cell.getY()+auxY);
     }
-    public void moveLeft()
+    
+    protected void setPossibles()
     {
-        x--;
-        reCalc();
+        for(Point cell : cells)
+            possibles.add(new Point(0, 0));
+        
+        for(Point poss : possibles)
+            poss.setArrPos(gridX);
+    }
+
+    public List<Point> rotate(int op, Direction dir)
+    {
+        int newX;
+        int newY;
+
+        //Pivots
+        int oX=cells.get(1).getX();
+        int oY=cells.get(1).getY();
+
+        if(op==0)
+        {
+            if(dir==Direction.TORIGHT)
+                for(int i=0; i<cells.size(); i++)
+                {
+                    newX = oX+(cells.get(i).getY()-oY);
+                    newY = oY-(cells.get(i).getX()-oX);
+
+                    cells.get(i).setPoint(newX, newY);
+                }
+    
+            else if(dir==Direction.TOLEFT)
+                for(int i=0; i<cells.size(); i++)
+                {
+                    newX = oX-(cells.get(i).getY()-oY);
+                    newY = oY+(cells.get(i).getX()-oX);
+
+                    cells.get(i).setPoint(newX, newY);
+                }
+        }
+        else
+        {
+            if(dir==Direction.TORIGHT)
+                for(int i=0; i<cells.size(); i++)
+                {
+                    newX = oX+(cells.get(i).getY()-oY);
+                    newY = oY-(cells.get(i).getX()-oX);
+
+                    possibles.get(i).setPoint(newX, newY);
+                }
+    
+            else if(dir==Direction.TOLEFT)
+                for(int i=0; i<cells.size(); i++)
+                {
+                    newX = oX-(cells.get(i).getY()-oY);
+                    newY = oY+(cells.get(i).getX()-oX);
+
+                    possibles.get(i).setPoint(newX, newY);
+                }
+
+            return possibles;
+        }
+
+        return null;
     }
 
     //Checs if the position of the piece is valid for a certain movement
@@ -50,6 +124,7 @@ public abstract class Piece
         //Assistant variables
         int auxX=0;
         int auxY=0;
+        List<Point> possibles = new ArrayList<Point>();
 
         //Depending on the value of dir, changes the aux variables
         switch(dir)
@@ -68,6 +143,17 @@ public abstract class Piece
 
             case RIGHT:
                 auxX=1;
+            break;
+
+            case TORIGHT:
+                possibles = rotate(1, Direction.TORIGHT);
+            break;
+
+            case TOLEFT:
+                possibles = rotate(1, Direction.TOLEFT);
+            break;
+
+            default:
             break;
         }
 
@@ -89,8 +175,17 @@ public abstract class Piece
             else if((dir==Direction.LEFT) && (cell.getX()<1))
                 return false;
         }
-            
+
+        if((dir==Direction.TORIGHT) || (dir==Direction.TOLEFT))
+            for(Point poss : possibles)
+                for(Point blocked : occupied)
+                    if((poss.getArrPos()==blocked.getArrPos()) || 
+                    (poss.getX()<0) || 
+                    (poss.getX()>gridX-1) || 
+                    (poss.getY()<0) || 
+                    (poss.getY()>gridY-1))
+                        return false;
+        
         return true;
     }
-
 }

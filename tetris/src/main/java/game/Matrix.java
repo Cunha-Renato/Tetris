@@ -11,7 +11,7 @@ public class Matrix
 {
     //Grid size
     private final int x = 10;
-    private final int y = 10;
+    private final int y = 20;
     
     private final int cellSize = 20; //Cell size (for visuals)
 
@@ -60,7 +60,7 @@ public class Matrix
     }
 
     //Adds a new pieace
-    private void newPiece() {this.piece = new PieceO(x, y, occupied);}
+    private void newPiece() {this.piece = new PieceL(x, y, occupied);}
 
     //Alocates the "id" of the color image into the colors array
     private void setColors()
@@ -144,7 +144,7 @@ public class Matrix
         if(piece.isValid(Direction.DOWN))
         {
             eraseGhost(piece.cells); //Clears its previous position
-            piece.sink(); //Moves down
+            piece.move(Direction.DOWN); //Moves down
         }
         else //Reached the bottom/landed on an occupied cell
         {
@@ -153,14 +153,10 @@ public class Matrix
                 occupied.add(cell);
 
             for(Point a : occupied)
-            {
                 for(Point cell : piece.cells)
                     if(a.getArrPos()==cell.getArrPos())
-                        a.setColor(piece.color);   
-            }
-
+                        a.setColor(piece.color);  
             
-
             clearLines(); //Checks if it theres lines to clear
             update(0);
             newPiece();
@@ -189,17 +185,27 @@ public class Matrix
         {
             case RIGHT:
                 if(piece.isValid(Direction.RIGHT))
-                    piece.moveRight();
+                    piece.move(Direction.RIGHT);
             break;
 
             case LEFT:
                 if(piece.isValid(Direction.LEFT))
-                    piece.moveLeft();
+                    piece.move(Direction.LEFT);
             break;
 
             case DOWN:
                 if(piece.isValid(Direction.DOWN))
                     sinkPiece();
+            break;
+
+            case TORIGHT:
+                if(piece.isValid(Direction.TORIGHT))
+                    piece.rotate(0, Direction.TORIGHT);
+            break;
+
+            case TOLEFT:
+                if(piece.isValid(Direction.TOLEFT))
+                    piece.rotate(0, Direction.TOLEFT);
             break;
 
             default:

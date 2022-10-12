@@ -7,6 +7,8 @@ public class dirEnum
         UP,
         DOWN,
         LEFT,
-        RIGHT
+        RIGHT,
+        TORIGHT,
+        TOLEFT
     }
 }

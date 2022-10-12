@@ -80,6 +80,12 @@ public class Tetris extends JFrame
             else if(event.getKeyCode() == KeyEvent.VK_S)
                 matrix.sinkPiece();
 
+            else if(event.getKeyCode() == KeyEvent.VK_E)
+                matrix.move(Direction.TORIGHT);
+
+            else if(event.getKeyCode() == KeyEvent.VK_Q)
+                matrix.move(Direction.TOLEFT);
+
             repaint();
         }
     }
