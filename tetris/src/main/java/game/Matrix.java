@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.*;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import game.dirEnum.Direction;
 
@@ -26,6 +28,8 @@ public class Matrix
     //Background Icon
     private ImageIcon background = new ImageIcon(new ImageIcon("./background.png").getImage().getScaledInstance(cellSize, cellSize, Image.SCALE_DEFAULT));
 
+    private JLabel pCounter = new JLabel();
+    private int points=0;
 
     public Matrix()
     {
@@ -129,7 +133,7 @@ public class Matrix
             //Paints the occupied ones
             for(Point a : occupied)
                 cells.get(a.getArrPos()).setIcon(color.get(a.getColor()));
-        } 
+        }
     }
 
     //Erases the current Piece (for movement)
@@ -157,6 +161,8 @@ public class Matrix
                 {
                     check=i;
                     qnt++;
+                    points++; //Increases the point counter, player got a point
+                    pCounter.setText("Points: "+points);
                     clearY(check);
                 }
 
@@ -254,6 +260,17 @@ public class Matrix
         }
         
         update(1); //Paints the Piece
+    }
+
+    public JLabel setPointCounter()
+    {
+        pCounter.setText("Points: "+points);
+        pCounter.setSize(new Dimension(200, 50));
+        pCounter.setForeground(Color.WHITE);
+        pCounter.setLocation(190, 80);
+        pCounter.setFont(new Font("Arial Black", Font.BOLD, 16));
+
+        return pCounter;
     }
 
     //Getters

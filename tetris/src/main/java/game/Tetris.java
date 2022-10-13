@@ -50,6 +50,7 @@ public class Tetris extends JFrame
         for(JLabel a : matrix.getCells())
             panel.add(a);
 
+        panel.add(matrix.setPointCounter());
         add(panel);
     }
 
