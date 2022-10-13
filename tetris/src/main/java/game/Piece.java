@@ -11,7 +11,7 @@ public abstract class Piece
     public int gridX;
     public int gridY;
 
-    public int color=new Random().nextInt(2); //Color of the piece
+    public int color=new Random().nextInt(5); //Color of the piece
     public List<Point> cells = new ArrayList<Point>(); //Cells that form the piece
     public List<Point> occupied; //A list representing occupied cells on the grid
     private List<Point> possibles = new ArrayList<Point>();
@@ -20,11 +20,36 @@ public abstract class Piece
     public int y=0;
     public int x=gridX/2;
 
-    public Assistant aux; //Assistant class (only functions)
+    public Assistant aux=new Assistant(); //Assistant class (only functions)
+
+    //Constructor
+    public Piece(int x, int y, List<Point> occupied)
+    {
+        gridX=x;
+        gridY=y;
+
+        this.y=0;
+        this.x=x/2;
+        
+        this.occupied=occupied;
+
+        setCells();
+        reCalc();
+        setPossibles();
+    }
 
     //Will be diferent for each piece
-    protected abstract void calc();
     protected abstract void reCalc();
+
+    //Initializing the cells array
+    private void setCells()
+    {
+        for(int i=0; i<4; i++)
+            cells.add(new Point(0, 0));
+
+        for(Point cell : cells)
+            cell.setArrPos(gridX);    
+    }
 
     //Movements that every piece will have 
     public void move(Direction dir)

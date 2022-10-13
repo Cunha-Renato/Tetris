@@ -2,6 +2,8 @@ package game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -60,12 +62,51 @@ public class Matrix
     }
 
     //Adds a new pieace
-    private void newPiece() {this.piece = new PieceL(x, y, occupied);}
+    private void newPiece() 
+    {
+        Random rand = new Random();
+        
+        int op = rand.nextInt(7);
+
+        switch(op)
+        {
+            case 0:
+                this.piece=new PieceI(x, y, occupied);
+            break;
+
+            case 1:
+                this.piece=new PieceJ(x, y, occupied);
+            break;
+
+            case 2:
+                this.piece=new PieceL(x, y, occupied);
+            break;
+
+            case 3:
+                this.piece=new PieceO(x, y, occupied);
+            break;
+
+            case 4:
+                this.piece=new PieceS(x, y, occupied);
+            break;
+
+            case 5:
+                this.piece=new PieceT(x, y, occupied);
+            break;
+
+            case 6:
+                this.piece=new PieceZ(x, y, occupied);
+            break;
+
+            default:
+            break;
+        }
+    }
 
     //Alocates the "id" of the color image into the colors array
     private void setColors()
     {
-        for(int i=0; i<2; i++)
+        for(int i=0; i<5; i++)
             color.add(new ImageIcon(new ImageIcon("./"+ i +".png").getImage().getScaledInstance(cellSize, cellSize, Image.SCALE_DEFAULT)));
 
     }
