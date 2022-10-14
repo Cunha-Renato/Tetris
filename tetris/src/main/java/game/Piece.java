@@ -154,20 +154,8 @@ public abstract class Piece
         //Depending on the value of dir, changes the aux variables
         switch(dir)
         {
-            case UP:
-                auxY=-1;       
-            break;
-
             case DOWN:
                 auxY=1; 
-            break;
-
-            case LEFT:
-                auxX=-1; 
-            break;
-
-            case RIGHT:
-                auxX=1;
             break;
 
             case TORIGHT:

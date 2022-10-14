@@ -28,8 +28,9 @@ public class Matrix
     //Background Icon
     private ImageIcon background = new ImageIcon(new ImageIcon("./background.png").getImage().getScaledInstance(cellSize, cellSize, Image.SCALE_DEFAULT));
 
-    private JLabel pCounter = new JLabel();
     private int points=0;
+
+    public boolean reseted=false;
 
     public Matrix()
     {
@@ -105,6 +106,9 @@ public class Matrix
             default:
             break;
         }
+    
+        
+        reset(); //If necessary the game will restart
     }
 
     //Alocates the "id" of the color image into the colors array
@@ -162,7 +166,6 @@ public class Matrix
                     check=i;
                     qnt++;
                     points++; //Increases the point counter, player got a point
-                    pCounter.setText("Points: "+points);
                     clearY(check);
                 }
 
@@ -206,12 +209,20 @@ public class Matrix
             
             clearLines(); //Checks if it theres lines to clear
             update(0);
+            
             newPiece();
         }
 
         update(1); //Paints the Piece
     }
-    
+
+    //Sinks the piece immediately
+    public void instantSink()
+    {
+        while(piece.isValid(Direction.DOWN)) 
+            sinkPiece();
+    }
+
     //Sink occupied cells after clearing
     private void sinkOccupied(int yPos, int qnt)
     {
@@ -219,8 +230,6 @@ public class Matrix
         for(Point blocked : occupied)
             if(blocked.getY()<yPos)
                 blocked.setY(blocked.getY()+qnt);
-            
-        
     }
 
     //Movements for the current Piece
@@ -262,20 +271,28 @@ public class Matrix
         update(1); //Paints the Piece
     }
 
-    public JLabel setPointCounter()
+    //Checks if the game is over
+    public boolean reset()
     {
-        pCounter.setText("Points: "+points);
-        pCounter.setSize(new Dimension(200, 50));
-        pCounter.setForeground(Color.WHITE);
-        pCounter.setLocation(190, 80);
-        pCounter.setFont(new Font("Arial Black", Font.BOLD, 16));
+        if(!piece.isValid(Direction.END))
+        {
+            occupied.clear();
+            update(0);
 
-        return pCounter;
+            reseted=true;
+            return true;
+        }
+        
+        return false;
     }
 
     //Getters
     public int getX() {return x;}
     public int getY() {return y;}
+    public int getPoints() {return points;}
     public List<JLabel> getCells() {return cells;}
+
+    //Seters
+    public void setPoints(int p) {points=p;}
 
 }

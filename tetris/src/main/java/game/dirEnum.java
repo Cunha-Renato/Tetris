@@ -9,6 +9,7 @@ public class dirEnum
         LEFT,
         RIGHT,
         TORIGHT,
-        TOLEFT
+        TOLEFT,
+        END
     }
 }
