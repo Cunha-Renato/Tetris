@@ -29,10 +29,10 @@ public class Tetris extends JFrame
     //Setup of the JFrame
     private void setJFrame()
     {
-        setTitle("Minesweeper");
+        setTitle("Tetris");
         setMinimumSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);setTitle("Minesweeper");
+        setLocationRelativeTo(null);
         setMinimumSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
